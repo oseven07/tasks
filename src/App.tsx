@@ -26,12 +26,12 @@ function App(): JSX.Element {
                     src="https://i5.walmartimages.com/asr/57e81448-5c10-455f-a733-6c031e020890.78e0baa09a9768621b35908f4cd420ec.jpeg"
                     alt="A desert painting."
                 />
-                <button
+                <Button
                     className="btn btn-primary"
                     onClick={() => console.log("Hello World!")}
                 >
                     Log Hello World
-                </button>
+                </Button>
                 <Container>
                     <Row>
                         <Col>
