@@ -153,10 +153,10 @@ export function injectPositive(values: number[]): number[] {
                 (sum: number, value: number, index: number): number =>
                     sum +
                     value *
-                        ((index <
+                        (index <
                             result.findIndex((value: number): boolean =>
                                 value < 0 ? true : false
-                            )) as unknown as number),
+                            )),
                 0
             )
         );
