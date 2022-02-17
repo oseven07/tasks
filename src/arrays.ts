@@ -144,22 +144,18 @@ export function injectPositive(values: number[]): number[] {
         result.filter((value: number): boolean => (value > 0 ? true : false))
             .length != values.length
     ) {
-        result.splice(
-            result.findIndex((value: number): boolean =>
-                value < 0 ? true : false
-            ) + 1,
-            0,
-            result.reduce(
-                (sum: number, value: number, index: number): number =>
-                    sum +
-                    value *
-                        (index <
-                            result.findIndex((value: number): boolean =>
-                                value < 0 ? true : false
-                            )),
-                0
-            )
+        const neg_index = result.findIndex((value: number): boolean =>
+            value < 0 ? true : false
         );
+
+        const sum = result.reduce(
+            (sum: number, value: number, index: number): number =>
+                // eslint-disable-next-line no-extra-parens
+                sum + value * ((index < neg_index) as unknown as number),
+            0
+        );
+
+        result.splice(neg_index + 1, 0, sum);
     } else {
         result.push(
             result.reduce(
