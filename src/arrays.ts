@@ -1,3 +1,5 @@
+import { ReadableStreamDefaultReader } from "stream/web";
+
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -5,7 +7,13 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    const result_book: number[] = [];
+
+    if (numbers.length > 0) {
+        result_book.push(numbers[0], numbers[numbers.length - 1]);
+    }
+
+    return result_book;
 }
 
 /**
@@ -13,7 +21,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const result: number[] = numbers.map((value: number): number => value * 3);
+    return result;
 }
 
 /**
@@ -21,7 +30,14 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    return numbers.map((str: string): number => {
+        let result = 0;
+        if (Number(str)) {
+            result = parseInt(str);
+        }
+
+        return result;
+    });
 }
 
 /**
@@ -32,7 +48,16 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    return amounts.map((str: string): number => {
+        let result = 0;
+        let temp = str[0] == "$" ? str.slice(1) : str;
+
+        if (Number(temp)) {
+            result = parseInt(temp);
+        }
+
+        return result;
+    });
 };
 
 /**
@@ -41,7 +66,13 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    let temp = messages.filter((str: string): boolean =>
+        str[str.length - 1] == "?" ? false : true
+    );
+
+    return temp.map((str: string): string =>
+        str[str.length - 1] == "!" ? str.toUpperCase() : str
+    );
 };
 
 /**
@@ -49,7 +80,9 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    return words.filter((str: string): boolean =>
+        str.length < 4 ? true : false
+    ).length;
 }
 
 /**
@@ -58,7 +91,17 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    let result = true;
+
+    if (colors.length > 0) {
+        let temp_colors = colors.filter((str: string): boolean =>
+            str == "red" || str == "blue" || str == "green" ? true : false
+        );
+
+        result = temp_colors.length == colors.length;
+    }
+
+    return result;
 }
 
 /**
@@ -69,7 +112,23 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    let result = "0=0";
+    if (addends.length > 0) {
+        let sum_string = addends.reduce(
+            (sum: number, value: number): number => sum + value,
+            0
+        );
+
+        let number_string = addends.reduce(
+            (str: string, value: number): string =>
+                str + (value as number) + "+",
+            "="
+        );
+
+        result = sum_string + number_string.slice(0, number_string.length - 1);
+    }
+
+    return result;
 }
 
 /**
@@ -82,5 +141,36 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    let result = [...values];
+
+    if (
+        result.filter((value: number): boolean => (value > 0 ? true : false))
+            .length != values.length
+    ) {
+        result.splice(
+            result.findIndex((value: number): boolean =>
+                value < 0 ? true : false
+            ) + 1,
+            0,
+            result.reduce(
+                (sum: number, value: number, index: number): number =>
+                    sum +
+                    value *
+                        ((index <
+                            result.findIndex((value: number): boolean =>
+                                value < 0 ? true : false
+                            )) as unknown as number),
+                0
+            )
+        );
+    } else {
+        result.push(
+            result.reduce(
+                (sum: number, value: number): number => sum + value,
+                0
+            )
+        );
+    }
+
+    return result;
 }
