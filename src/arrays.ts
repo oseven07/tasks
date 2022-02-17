@@ -50,7 +50,7 @@ export function stringsToIntegers(numbers: string[]): number[] {
 export const removeDollars = (amounts: string[]): number[] => {
     return amounts.map((str: string): number => {
         let result = 0;
-        let temp = str[0] == "$" ? str.slice(1) : str;
+        const temp = str[0] == "$" ? str.slice(1) : str;
 
         if (Number(temp)) {
             result = parseInt(temp);
@@ -66,7 +66,7 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    let temp = messages.filter((str: string): boolean =>
+    const temp = messages.filter((str: string): boolean =>
         str[str.length - 1] == "?" ? false : true
     );
 
@@ -94,7 +94,7 @@ export function allRGB(colors: string[]): boolean {
     let result = true;
 
     if (colors.length > 0) {
-        let temp_colors = colors.filter((str: string): boolean =>
+        const temp_colors = colors.filter((str: string): boolean =>
             str == "red" || str == "blue" || str == "green" ? true : false
         );
 
@@ -114,12 +114,12 @@ export function allRGB(colors: string[]): boolean {
 export function makeMath(addends: number[]): string {
     let result = "0=0";
     if (addends.length > 0) {
-        let sum_string = addends.reduce(
+        const sum_string = addends.reduce(
             (sum: number, value: number): number => sum + value,
             0
         );
 
-        let number_string = addends.reduce(
+        const number_string = addends.reduce(
             (str: string, value: number): string =>
                 str + (value as number) + "+",
             "="
@@ -141,7 +141,7 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    let result = [...values];
+    const result = [...values];
 
     if (
         result.filter((value: number): boolean => (value > 0 ? true : false))
