@@ -1,5 +1,3 @@
-import { ReadableStreamDefaultReader } from "stream/web";
-
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -120,8 +118,7 @@ export function makeMath(addends: number[]): string {
         );
 
         const number_string = addends.reduce(
-            (str: string, value: number): string =>
-                str + (value as number) + "+",
+            (str: string, value: number): string => str + value + "+",
             "="
         );
 
